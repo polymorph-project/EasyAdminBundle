@@ -9,7 +9,7 @@ on:
 env:
     fail-fast: true
     PHPUNIT_FLAGS: "-v"
-    SYMFONY_REQUIRE: ">=4.2"
+    SYMFONY_REQUIRE: ">=5.4"
     SYMFONY_PHPUNIT_DIR: "$HOME/symfony-bridge/.phpunit"
     # Remaining indirect deprecation notices (3)
     #  3x: Since symfony/form 5.2: Setting the "legacy_error_messages" option to "true" is deprecated. It will be disabled in Symfony 6.0.
@@ -61,7 +61,7 @@ jobs:
                   restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
 
             - name: "Require symfony/flex"
-              run: composer global require --no-progress --no-scripts --no-plugins symfony/flex dev-main
+              run: composer global require --no-progress --no-scripts --no-plugins symfony/flex
 
             - name: "Install dependencies with Composer"
               run: composer update
