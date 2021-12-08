@@ -232,7 +232,7 @@ class CustomizedBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Back to Category listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -267,7 +267,7 @@ class CustomizedBackendTest extends AbstractTestCase
 
         // 4. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Return to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -353,7 +353,7 @@ class CustomizedBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Return to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -445,7 +445,7 @@ class CustomizedBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Return to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -573,7 +573,7 @@ class CustomizedBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the previous specific 'search' view page
         $refererUrl = $crawler->filter('.form-actions a:contains("Back to Category listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);

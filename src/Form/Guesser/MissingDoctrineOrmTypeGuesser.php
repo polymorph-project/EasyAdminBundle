@@ -2,7 +2,6 @@
 
 namespace EasyCorp\Bundle\EasyAdminBundle\Form\Guesser;
 
-use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

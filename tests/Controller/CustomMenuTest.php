@@ -267,7 +267,7 @@ class CustomMenuTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should contain the custom query string param
         $refererUrl = $crawler->filter('.form-actions a:contains("Back to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame('customValue', $refererParameters['customParameter']);

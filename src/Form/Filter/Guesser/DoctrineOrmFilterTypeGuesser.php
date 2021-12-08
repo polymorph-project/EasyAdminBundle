@@ -2,7 +2,6 @@
 
 namespace EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Guesser;
 
-use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Type\ArrayFilterType;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Type\BooleanFilterType;

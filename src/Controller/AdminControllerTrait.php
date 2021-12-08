@@ -54,8 +54,6 @@ trait AdminControllerTrait
     /**
      * @Route("/", name="easyadmin")
      *
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      *
      * @throws ForbiddenActionException
@@ -89,8 +87,6 @@ trait AdminControllerTrait
     /**
      * Utility method which initializes the configuration of the entity on which
      * the user is performing the action.
-     *
-     * @param Request $request
      *
      * @throws NoEntitiesConfiguredException
      * @throws UndefinedEntityException
@@ -711,7 +707,6 @@ trait AdminControllerTrait
      *
      * @param string      $entityClass
      * @param string      $searchQuery
-     * @param array       $searchableFields
      * @param int         $page
      * @param int         $maxPerPage
      * @param string|null $sortField
@@ -744,7 +739,6 @@ trait AdminControllerTrait
      *
      * @param string      $entityClass
      * @param string      $searchQuery
-     * @param array       $searchableFields
      * @param string|null $sortField
      * @param string|null $sortDirection
      * @param string|null $dqlFilter
@@ -760,7 +754,6 @@ trait AdminControllerTrait
      * Creates the form used to edit an entity.
      *
      * @param object $entity
-     * @param array  $entityProperties
      *
      * @return Form|FormInterface
      */
@@ -773,7 +766,6 @@ trait AdminControllerTrait
      * Creates the form used to create an entity.
      *
      * @param object $entity
-     * @param array  $entityProperties
      *
      * @return Form|FormInterface
      */
@@ -819,7 +811,6 @@ trait AdminControllerTrait
      * Creates the form object used to create or edit the given entity.
      *
      * @param object $entity
-     * @param array  $entityProperties
      * @param string $view
      *
      * @return FormInterface
