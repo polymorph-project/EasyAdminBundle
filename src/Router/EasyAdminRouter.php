@@ -29,11 +29,11 @@ final class EasyAdminRouter
 
     /**
      * @param object|string $entity
-     * @param string $action
+     * @param string        $action
      *
      * @return string
-     *@throws UndefinedEntityException
      *
+     *@throws UndefinedEntityException
      */
     public function generate($entity, string $action, array $parameters = [])
     {
@@ -75,8 +75,8 @@ final class EasyAdminRouter
      * @param string $class
      *
      * @return array
-     *@throws UndefinedEntityException
      *
+     *@throws UndefinedEntityException
      */
     private function getEntityConfigByClass(string $class): array
     {

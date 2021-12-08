@@ -18,7 +18,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('easy_admin');
         $rootNode = $treeBuilder->getRootNode();
 
-
         $this->addGlobalOptionsSection($rootNode);
         $this->addUserSection($rootNode);
         $this->addDesignSection($rootNode);
