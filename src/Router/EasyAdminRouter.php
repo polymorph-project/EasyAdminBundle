@@ -14,10 +14,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class EasyAdminRouter
 {
-    private $configManager;
-    private $urlGenerator;
-    private $propertyAccessor;
-    private $requestStack;
+    private ConfigManager $configManager;
+    private UrlGeneratorInterface $urlGenerator;
+    private PropertyAccessorInterface $propertyAccessor;
+    private ?RequestStack $requestStack;
 
     public function __construct(ConfigManager $configManager, UrlGeneratorInterface $urlGenerator, PropertyAccessorInterface $propertyAccessor, RequestStack $requestStack = null)
     {
@@ -29,13 +29,13 @@ final class EasyAdminRouter
 
     /**
      * @param object|string $entity
-     * @param string        $action
-     *
-     * @throws UndefinedEntityException
+     * @param string $action
      *
      * @return string
+     *@throws UndefinedEntityException
+     *
      */
-    public function generate($entity, $action, array $parameters = [])
+    public function generate($entity, string $action, array $parameters = [])
     {
         if (\is_object($entity)) {
             $config = $this->getEntityConfigByClass(\get_class($entity));
@@ -74,11 +74,11 @@ final class EasyAdminRouter
     /**
      * @param string $class
      *
-     * @throws UndefinedEntityException
-     *
      * @return array
+     *@throws UndefinedEntityException
+     *
      */
-    private function getEntityConfigByClass($class)
+    private function getEntityConfigByClass(string $class): array
     {
         if (!$config = $this->configManager->getEntityConfigByClass($this->getRealClass($class))) {
             throw new UndefinedEntityException(['entity_name' => $class]);
@@ -92,7 +92,7 @@ final class EasyAdminRouter
      *
      * @return string
      */
-    private function getRealClass($class)
+    private function getRealClass(string $class): string
     {
         if (false === $pos = strrpos($class, '\\'.Proxy::MARKER.'\\')) {
             return $class;

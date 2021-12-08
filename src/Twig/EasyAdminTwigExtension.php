@@ -25,14 +25,14 @@ use Twig\TwigFunction;
  */
 class EasyAdminTwigExtension extends AbstractExtension
 {
-    private $configManager;
-    private $propertyAccessor;
-    private $easyAdminRouter;
-    private $debug;
-    private $logoutUrlGenerator;
+    private ConfigManager $configManager;
+    private PropertyAccessorInterface $propertyAccessor;
+    private EasyAdminRouter $easyAdminRouter;
+    private bool $debug;
+    private ?LogoutUrlGenerator $logoutUrlGenerator;
     /** @var TranslatorInterface|null */
-    private $translator;
-    private $authorizationChecker;
+    private ?TranslatorInterface $translator;
+    private AuthorizationChecker $authorizationChecker;
 
     public function __construct(ConfigManager $configManager, PropertyAccessorInterface $propertyAccessor, EasyAdminRouter $easyAdminRouter, bool $debug, ?LogoutUrlGenerator $logoutUrlGenerator, $translator, AuthorizationChecker $authorizationChecker)
     {
@@ -48,7 +48,7 @@ class EasyAdminTwigExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('easyadmin_render_field_for_*_view', [$this, 'renderEntityField'], ['is_safe' => ['html'], 'needs_environment' => true]),
@@ -102,7 +102,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @return mixed
      */
-    public function getBackendConfiguration($key = null)
+    public function getBackendConfiguration($key = null): mixed
     {
         return $this->configManager->getBackendConfig($key);
     }
@@ -114,7 +114,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @return array|null
      */
-    public function getEntityConfiguration($entityName)
+    public function getEntityConfiguration(string $entityName): ?array
     {
         return null !== $this->getBackendConfiguration('entities.'.$entityName)
             ? $this->configManager->getEntityConfig($entityName)
@@ -147,7 +147,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @throws \Exception
      */
-    public function renderEntityField(Environment $twig, $view, $entityName, $item, array $fieldMetadata)
+    public function renderEntityField(Environment $twig, $view, $entityName, $item, array $fieldMetadata): string
     {
         $entityConfiguration = $this->configManager->getEntityConfig($entityName);
         $hasCustomTemplate = 0 !== strpos($fieldMetadata['template'], '@EasyAdmin/');
@@ -183,7 +183,7 @@ class EasyAdminTwigExtension extends AbstractExtension
         }
     }
 
-    private function getTemplateParameters($entityName, $view, array $fieldMetadata, $item)
+    private function getTemplateParameters($entityName, $view, array $fieldMetadata, $item): array
     {
         $fieldName = $fieldMetadata['property'];
         $fieldType = $fieldMetadata['dataType'];
@@ -239,7 +239,7 @@ class EasyAdminTwigExtension extends AbstractExtension
         return $parameters;
     }
 
-    private function addImageFieldParameters(array $templateParameters)
+    private function addImageFieldParameters(array $templateParameters): array
     {
         // add the base path only to images that are not absolute URLs (http or https) or protocol-relative URLs (//)
         if (null !== $templateParameters['value'] && 0 === preg_match('/^(http[s]?|\/\/)/i', $templateParameters['value'])) {
@@ -253,7 +253,7 @@ class EasyAdminTwigExtension extends AbstractExtension
         return $templateParameters;
     }
 
-    private function addFileFieldParameters(array $templateParameters)
+    private function addFileFieldParameters(array $templateParameters): array
     {
         // add the base path only to files that are not absolute URLs (http or https) or protocol-relative URLs (//)
         if (null !== $templateParameters['value'] && 0 === preg_match('/^(http[s]?|\/\/)/i', $templateParameters['value'])) {
@@ -267,7 +267,7 @@ class EasyAdminTwigExtension extends AbstractExtension
         return $templateParameters;
     }
 
-    private function addAssociationFieldParameters(array $templateParameters)
+    private function addAssociationFieldParameters(array $templateParameters): array
     {
         $targetEntityConfig = $this->configManager->getEntityConfigByClass($templateParameters['field_options']['targetEntity']);
         // the associated entity is not managed by EasyAdmin
@@ -329,7 +329,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @return bool
      */
-    public function isActionEnabled($view, $action, $entityName)
+    public function isActionEnabled($view, $action, $entityName): bool
     {
         return $this->configManager->isActionEnabled($entityName, $view, $action);
     }
@@ -343,7 +343,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getActionConfiguration($view, $action, $entityName)
+    public function getActionConfiguration($view, $action, $entityName): array
     {
         return $this->configManager->getActionConfig($entityName, $view, $action);
     }
@@ -358,7 +358,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getActionsForItem($view, $entityName)
+    public function getActionsForItem($view, $entityName): array
     {
         try {
             $entityConfig = $this->configManager->getEntityConfig($entityName);
@@ -391,7 +391,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function truncateText(Environment $env, $value, $length = 64, $preserve = false, $separator = '...')
+    public function truncateText(Environment $env, $value, $length = 64, $preserve = false, $separator = '...'): string
     {
         try {
             $value = (string) $value;
@@ -432,7 +432,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      * Remove this filter when the Symfony's requirement is equal or greater than 4.2
      * and use the built-in trans filter instead with a %count% parameter.
      */
-    public function transchoice($message, $count, array $arguments = [], $domain = null, $locale = null)
+    public function transchoice($message, $count, array $arguments = [], $domain = null, $locale = null): string
     {
         if (null === $this->translator) {
             return strtr($message, $arguments);
@@ -489,11 +489,6 @@ class EasyAdminTwigExtension extends AbstractExtension
     {
         if (null === $countryCode) {
             return null;
-        }
-
-        // Compatibility with Symfony versions before 4.3
-        if (!class_exists(Countries::class)) {
-            return Intl::getRegionBundle()->getCountryName($countryCode) ?? null;
         }
 
         try {

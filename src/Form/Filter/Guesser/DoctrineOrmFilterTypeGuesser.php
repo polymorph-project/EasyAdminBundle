@@ -24,14 +24,14 @@ use Symfony\Component\Form\Guess\TypeGuess;
  */
 class DoctrineOrmFilterTypeGuesser extends DoctrineOrmTypeGuesser
 {
-    private static $defaultOptions = [
+    private static array $defaultOptions = [
         'translation_domain' => 'EasyAdminBundle',
     ];
 
     /**
      * {@inheritdoc}
      */
-    public function guessType($class, $property)
+    public function guessType(string $class, string $property): ?TypeGuess
     {
         if (!$doctrineEntityMetadata = $this->getMetadata($class)) {
             return null;

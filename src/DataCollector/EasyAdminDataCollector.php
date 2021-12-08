@@ -18,7 +18,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class EasyAdminDataCollector extends DataCollector
 {
-    private $configManager;
+    private ConfigManager $configManager;
 
     public function __construct(ConfigManager $configManager)
     {
@@ -29,7 +29,7 @@ class EasyAdminDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function reset()
+    public function reset(): void
     {
         $this->data = [
             'num_entities' => 0,
@@ -82,7 +82,7 @@ class EasyAdminDataCollector extends DataCollector
     /**
      * @return int
      */
-    public function getNumEntities()
+    public function getNumEntities(): int
     {
         return $this->data['num_entities'];
     }
@@ -90,7 +90,7 @@ class EasyAdminDataCollector extends DataCollector
     /**
      * @return array
      */
-    public function getRequestParameters()
+    public function getRequestParameters(): array
     {
         return $this->data['request_parameters'];
     }
@@ -98,7 +98,7 @@ class EasyAdminDataCollector extends DataCollector
     /**
      * @return array
      */
-    public function getCurrentEntityConfig()
+    public function getCurrentEntityConfig(): array
     {
         return $this->data['current_entity_configuration'];
     }
@@ -106,7 +106,7 @@ class EasyAdminDataCollector extends DataCollector
     /**
      * @return array
      */
-    public function getBackendConfig()
+    public function getBackendConfig(): array
     {
         return $this->data['backend_configuration'];
     }
@@ -142,7 +142,7 @@ class EasyAdminDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'easyadmin';
     }
