@@ -33,7 +33,7 @@ class EasyAdminController extends AbstractController
             'easyadmin.filter.registry' => FilterRegistry::class,
             'easyadmin.security.authorization_checker' => AuthorizationChecker::class,
             'event_dispatcher' => EventDispatcherInterface::class,
-            'doctrine' => '?'.ManagerRegistry::class
+            'doctrine' => '?'.ManagerRegistry::class,
         ]);
     }
 }
