@@ -68,7 +68,7 @@ class EasyAdminTwigExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         $filters = [
             new TwigFilter('easyadmin_truncate', [$this, 'truncateText'], ['needs_environment' => true]),
@@ -101,7 +101,7 @@ class EasyAdminTwigExtension extends AbstractExtension
      *
      * @return mixed
      */
-    public function getBackendConfiguration($key = null): mixed
+    public function getBackendConfiguration($key = null)
     {
         return $this->configManager->getBackendConfig($key);
     }

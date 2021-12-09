@@ -44,7 +44,7 @@ class ProductController extends EasyAdminController
     /**
      * @param Product $product
      */
-    protected function updateEntity($product, FormInterface $editForm = null): void
+    protected function updateEntity($product, $editForm = null): void
     {
         /** @var UpdateProductNameData $object */
         $object = $editForm->getData();

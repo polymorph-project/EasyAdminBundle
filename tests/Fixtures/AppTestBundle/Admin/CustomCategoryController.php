@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomCategoryController extends EasyAdminController
 {
-    public function listAction()
+    public function listAction(): Response
     {
         return new Response('Overridden list action.');
     }
@@ -17,7 +17,7 @@ class CustomCategoryController extends EasyAdminController
      * already using a custom controller for the entity. But this should be
      * possible for consistency and this test makes sure it's working.
      */
-    public function showCategoryAction()
+    public function showCategoryAction(): Response
     {
         return new Response('Overridden show action.');
     }

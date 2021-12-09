@@ -31,7 +31,7 @@ class DoctrineOrmFilterTypeGuesser extends DoctrineOrmTypeGuesser
     /**
      * {@inheritdoc}
      */
-    public function guessType(string $class, string $property): ?TypeGuess
+    public function guessType($class, $property)
     {
         if (!$doctrineEntityMetadata = $this->getMetadata($class)) {
             return null;

@@ -18,7 +18,7 @@ class MissingDoctrineOrmTypeGuesser extends DoctrineOrmTypeGuesser
     /**
      * {@inheritdoc}
      */
-    public function guessType(string $class, string $property): TypeGuess
+    public function guessType($class, $property): TypeGuess
     {
         if (null !== $metadataAndName = $this->getMetadata($class)) {
             /** @var ClassMetadataInfo $metadata */

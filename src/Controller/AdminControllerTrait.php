@@ -626,7 +626,7 @@ trait AdminControllerTrait
      *
      * @param object $entity
      */
-    protected function persistEntity($entity)
+    protected function persistEntity($entity): void
     {
         $this->em->persist($entity);
         $this->em->flush();
@@ -638,7 +638,7 @@ trait AdminControllerTrait
      *
      * @param object $entity
      */
-    protected function updateEntity($entity)
+    protected function updateEntity($entity): void
     {
         $this->em->persist($entity);
         $this->em->flush();
@@ -650,7 +650,7 @@ trait AdminControllerTrait
      *
      * @param object $entity
      */
-    protected function removeEntity($entity)
+    protected function removeEntity($entity): void
     {
         $this->em->remove($entity);
         $this->em->flush();
@@ -976,7 +976,7 @@ trait AdminControllerTrait
      *
      * @return Response
      */
-    protected function renderTemplate($actionName, $templatePath, array $parameters = [])
+    protected function renderTemplate(string $actionName, string$templatePath, array $parameters = [])
     {
         return $this->render($templatePath, $parameters);
     }

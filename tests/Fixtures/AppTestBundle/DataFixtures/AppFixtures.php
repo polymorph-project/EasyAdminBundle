@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private $phrases = [
+    private array $phrases = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'Pellentesque vitae velit ex.',
         'Mauris dapibus, risus quis suscipit vulputate, eros diam egestas libero, eu vulputate eros eros eu risus.',
@@ -32,7 +32,7 @@ class AppFixtures extends Fixture
         'Pellentesque et sapien pulvinar, consectetur eros ac, vehicula odio.',
     ];
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $users = $this->createUsers();
         foreach ($users as $user) {
