@@ -19,7 +19,7 @@ class AuthorizationCheckerTest extends TestCase
      */
     private $decorator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $this->decorator = new AuthorizationChecker($this->authorizationChecker);

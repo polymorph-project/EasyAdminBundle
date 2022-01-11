@@ -39,7 +39,7 @@ class DisabledActionsTest extends AbstractTestCase
     {
         $this->requestShowView('User', 1);
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'The requested &quot;show&quot; action is not allowed for the &quot;User&quot; entity.',
             static::$client->getResponse()->getContent()
         );
@@ -64,7 +64,7 @@ class DisabledActionsTest extends AbstractTestCase
         ]);
         static::$client->submit($form);
 
-        $this->assertContains($expectedRedirectionLocation, static::$client->getResponse()->headers->get('location'));
+        $this->assertStringContainsString($expectedRedirectionLocation, static::$client->getResponse()->headers->get('location'));
     }
 
     public function provideRedirections()

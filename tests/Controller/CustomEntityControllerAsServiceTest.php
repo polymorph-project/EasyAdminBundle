@@ -8,7 +8,7 @@ class CustomEntityControllerAsServiceTest extends AbstractTestCase
 {
     protected static $options = ['environment' => 'custom_entity_controller_service'];
 
-    public function testListAction()
+    public function testListAction(): void
     {
         $this->requestListView();
 
@@ -16,10 +16,10 @@ class CustomEntityControllerAsServiceTest extends AbstractTestCase
             $this->markTestSkipped('This test is skipped because @request_stack service is not available.');
         }
 
-        $this->assertContains('Overridden list action as a service.', static::$client->getResponse()->getContent());
+        $this->assertStringContainsString('Overridden list action as a service.', static::$client->getResponse()->getContent());
     }
 
-    public function testShowAction()
+    public function testShowAction(): void
     {
         $this->requestShowView();
 
@@ -27,6 +27,6 @@ class CustomEntityControllerAsServiceTest extends AbstractTestCase
             $this->markTestSkipped('This test is skipped because @request_stack service is not available.');
         }
 
-        $this->assertContains('Overridden show action as a service.', static::$client->getResponse()->getContent());
+        $this->assertStringContainsString('Overridden show action as a service.', static::$client->getResponse()->getContent());
     }
 }

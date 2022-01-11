@@ -16,8 +16,8 @@ env:
     #    1x in CustomizedBackendTest::testEditViewCheckboxLabel from EasyCorp\Bundle\EasyAdminBundle\Tests\Controller
     #    1x in CustomizedBackendTest::testListViewAutocompleteField from EasyCorp\Bundle\EasyAdminBundle\Tests\Controller
     #    1x in CustomizedBackendTest::testNewViewCheckboxLabel from EasyCorp\Bundle\EasyAdminBundle\Tests\Controller
-    SYMFONY_DEPRECATIONS_HELPER: 3
-    SYMFONY_PHPUNIT_VERSION: 7.5
+    SYMFONY_DEPRECATIONS_HELPER: 'max[total]=999999'
+    SYMFONY_PHPUNIT_VERSION: 9.5
     # https://symfony.com/doc/current/components/phpunit_bridge.html#removing-the-void-return-type
     SYMFONY_PHPUNIT_REMOVE_RETURN_TYPEHINT: 1
 

@@ -6,7 +6,6 @@ use AppTestBundle\Entity\FunctionalTests\Product;
 use AppTestBundle\Form\Data\AddProductData;
 use AppTestBundle\Form\Data\UpdateProductNameData;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
-use Symfony\Component\Form\FormInterface;
 
 class ProductController extends EasyAdminController
 {

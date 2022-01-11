@@ -2,10 +2,13 @@
 
 namespace EasyCorp\Bundle\EasyAdminBundle\Tests\Controller;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Tests\Fixtures\AbstractTestCase;
 
 class CustomMenuTest extends AbstractTestCase
 {
+    use ArraySubsetAsserts;
+
     protected static $options = ['environment' => 'custom_menu'];
 
     public function testCustomBackendHomepage()
@@ -57,12 +60,12 @@ class CustomMenuTest extends AbstractTestCase
     {
         $crawler = $this->getBackendHomepage();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'header',
             $crawler->filter('.sidebar-menu li:contains("About EasyAdmin")')->attr('class')
         );
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'header',
             $crawler->filter('.sidebar-menu .treeview-menu li:contains("Additional Items")')->attr('class')
         );

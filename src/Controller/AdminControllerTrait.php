@@ -976,7 +976,7 @@ trait AdminControllerTrait
      *
      * @return Response
      */
-    protected function renderTemplate(string $actionName, string$templatePath, array $parameters = [])
+    protected function renderTemplate(string $actionName, string $templatePath, array $parameters = [])
     {
         return $this->render($templatePath, $parameters);
     }

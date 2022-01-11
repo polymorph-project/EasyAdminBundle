@@ -3,6 +3,7 @@
 namespace EasyCorp\Bundle\EasyAdminBundle\Tests\Search;
 
 use EasyCorp\Bundle\EasyAdminBundle\Tests\Fixtures\AbstractTestCase;
+use InvalidArgumentException;
 
 class AutocompleteTest extends AbstractTestCase
 {
@@ -22,12 +23,10 @@ class AutocompleteTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The "entity" argument must contain the name of an entity managed by EasyAdmin ("ThisEntityDoesNotExist" given).
-     */
     public function testAutocompleteWrongEntity()
     {
+        $this->expectExceptionMessage('The "entity" argument must contain the name of an entity managed by EasyAdmin ("ThisEntityDoesNotExist" given).');
+        $this->expectException(InvalidArgumentException::class);
         $this->getBackendHomepage();
         static::$client->getContainer()->get('easyadmin.autocomplete')->find('ThisEntityDoesNotExist', 'John Doe');
     }

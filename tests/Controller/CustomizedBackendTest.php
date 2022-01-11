@@ -16,10 +16,10 @@ class CustomizedBackendTest extends AbstractTestCase
             'PHP_AUTH_PW' => 'pa$$word',
         ]);
 
-        $this->assertContains('admin', $crawler->filter('[data-toggle="popover"]')->attr('data-content'));
+        $this->assertStringContainsString('admin', $crawler->filter('[data-toggle="popover"]')->attr('data-content'));
 
         if (class_exists('Symfony\\Component\\Security\\Http\\Logout\\LogoutUrlGenerator')) {
-            $this->assertContains('Sign out', $crawler->filter('[data-toggle="popover"]')->attr('data-content'));
+            $this->assertStringContainsString('Sign out', $crawler->filter('[data-toggle="popover"]')->attr('data-content'));
         } else {
             $this->assertNotContains('Sign out', $crawler->filter('[data-toggle="popover"]')->attr('data-content'));
         }
@@ -45,7 +45,7 @@ class CustomizedBackendTest extends AbstractTestCase
         $crawler = $this->requestListView();
 
         $this->assertSame('Look for Categories', trim($crawler->filter('.form-action-search [type="search"]')->attr('placeholder')));
-        $this->assertContains('custom_class_search', $crawler->filter('.action-search')->attr('class'));
+        $this->assertStringContainsString('custom_class_search', $crawler->filter('.action-search')->attr('class'));
 
         $this->assertSame('search', $crawler->filter('.action-search input[type="hidden"][name="action"]')->attr('value'));
         $this->assertSame('Category', $crawler->filter('.action-search input[type="hidden"][name="entity"]')->attr('value'));
@@ -136,7 +136,7 @@ class CustomizedBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestListView();
 
-        $this->assertContains('200 results', $crawler->filter('.list-pagination')->text(null, true));
+        $this->assertStringContainsString('200 results', $crawler->filter('.list-pagination')->text(null, true));
 
         $this->assertSame('page-item disabled', $crawler->filter('.list-pagination li:contains("Previous")')->attr('class'));
         $this->assertSame('page-link', $crawler->filter('.list-pagination a:contains("Previous")')->attr('class'));
@@ -148,8 +148,8 @@ class CustomizedBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestListView('Purchase');
 
-        $this->assertRegExp('/\d{8}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.date')->text(null, true)));
-        $this->assertRegExp('/\d{2}:\d{2}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.time')->text(null, true)));
+        $this->assertMatchesRegularExpression('/\d{8}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.date')->text(null, true)));
+        $this->assertMatchesRegularExpression('/\d{2}:\d{2}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.time')->text(null, true)));
     }
 
     public function testShowViewDefaultFormats()
@@ -160,8 +160,8 @@ class CustomizedBackendTest extends AbstractTestCase
         $purchaseId = trim($crawler->filter('#main table tr')->eq(1)->filter('td')->eq(0)->text(null, true));
         $crawler = $this->requestShowView('Purchase', $purchaseId);
 
-        $this->assertRegExp('/\d{4}-\d{2}-\d{2}/', trim($crawler->filter('#main .form-group:contains("Delivery date")')->filter('.form-control')->text(null, true)));
-        $this->assertRegExp('/\d{2}:\d{2}:\d{2}/', trim($crawler->filter('#main .form-group:contains("Delivery hour")')->filter('.form-control')->text(null, true)));
+        $this->assertMatchesRegularExpression('/\d{4}-\d{2}-\d{2}/', trim($crawler->filter('#main .form-group:contains("Delivery date")')->filter('.form-control')->text(null, true)));
+        $this->assertMatchesRegularExpression('/\d{2}:\d{2}:\d{2}/', trim($crawler->filter('#main .form-group:contains("Delivery hour")')->filter('.form-control')->text(null, true)));
     }
 
     public function testShowViewPageTitle()
@@ -195,7 +195,7 @@ class CustomizedBackendTest extends AbstractTestCase
         $fieldClasses = ['integer', 'string', 'association'];
 
         foreach ($fieldClasses as $i => $cssClass) {
-            $this->assertContains('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
+            $this->assertStringContainsString('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
         }
     }
 
@@ -204,13 +204,13 @@ class CustomizedBackendTest extends AbstractTestCase
         $crawler = $this->requestShowView();
 
         // edit action
-        $this->assertContains('fa-pencil-square', trim($crawler->filter('.form-actions a:contains("Modify Category") i')->attr('class')));
+        $this->assertStringContainsString('fa-pencil-square', trim($crawler->filter('.form-actions a:contains("Modify Category") i')->attr('class')));
 
         // delete action (removed in configuration file)
         $this->assertCount(0, $crawler->filter('.form-actions a:contains("Delete")'));
 
         // list action
-        $this->assertContains('fa-list', trim($crawler->filter('.form-actions a:contains("Back to Category listing") i')->attr('class')));
+        $this->assertStringContainsString('fa-list', trim($crawler->filter('.form-actions a:contains("Back to Category listing") i')->attr('class')));
     }
 
     public function testShowViewListActionReferer()
@@ -315,11 +315,11 @@ class CustomizedBackendTest extends AbstractTestCase
         $fieldCustomClasses = ['integer', 'text', 'entity'];
 
         foreach ($fieldDefaultClasses as $i => $cssClass) {
-            $this->assertContains('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
+            $this->assertStringContainsString('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
         }
 
         foreach ($fieldCustomClasses as $i => $cssClass) {
-            $this->assertContains($cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
+            $this->assertStringContainsString($cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
         }
     }
 
@@ -328,10 +328,10 @@ class CustomizedBackendTest extends AbstractTestCase
         $crawler = $this->requestEditView();
 
         // delete action
-        $this->assertContains('fa-minus-circle', trim($crawler->filter('.form-actions a:contains("Remove") i')->attr('class')));
+        $this->assertStringContainsString('fa-minus-circle', trim($crawler->filter('.form-actions a:contains("Remove") i')->attr('class')));
 
         // list action
-        $this->assertContains('fa-list', trim($crawler->filter('.form-actions a:contains("Return to listing") i')->attr('class')));
+        $this->assertStringContainsString('fa-list', trim($crawler->filter('.form-actions a:contains("Return to listing") i')->attr('class')));
     }
 
     public function testEditViewListActionReferer()
@@ -363,7 +363,7 @@ class CustomizedBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestEditView('Product', '1');
 
-        $this->assertContains('Custom Label', trim($crawler->filter('#product_enabled')->parents()->filter('label')->text(null, true)));
+        $this->assertStringContainsString('Custom Label', trim($crawler->filter('#product_enabled')->parents()->filter('label')->text(null, true)));
     }
 
     public function testListViewAutocompleteField()
@@ -414,7 +414,7 @@ class CustomizedBackendTest extends AbstractTestCase
         $fieldClasses = ['integer', 'text', 'entity'];
 
         foreach ($fieldClasses as $i => $cssClass) {
-            $this->assertContains('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
+            $this->assertStringContainsString('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
         }
     }
 
@@ -423,7 +423,7 @@ class CustomizedBackendTest extends AbstractTestCase
         $crawler = $this->requestNewView();
 
         // list action
-        $this->assertContains('fa-list', trim($crawler->filter('.form-actions a:contains("Return to listing") i')->attr('class')));
+        $this->assertStringContainsString('fa-list', trim($crawler->filter('.form-actions a:contains("Return to listing") i')->attr('class')));
     }
 
     public function testNewViewListActionReferer()
@@ -479,7 +479,7 @@ class CustomizedBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestNewView('Product');
 
-        $this->assertContains('Custom Label', trim($crawler->filter('#product_enabled')->parents()->filter('label')->text(null, true)));
+        $this->assertStringContainsString('Custom Label', trim($crawler->filter('#product_enabled')->parents()->filter('label')->text(null, true)));
     }
 
     public function testSearchViewPageTitle()
@@ -534,7 +534,7 @@ class CustomizedBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestSearchView();
 
-        $this->assertContains('200 results', $crawler->filter('.list-pagination')->text(null, true));
+        $this->assertStringContainsString('200 results', $crawler->filter('.list-pagination')->text(null, true));
 
         $this->assertSame('page-item disabled', $crawler->filter('.list-pagination li:contains("Previous")')->attr('class'));
         $this->assertSame('page-link', $crawler->filter('.list-pagination a:contains("Previous")')->attr('class'));
@@ -591,7 +591,7 @@ class CustomizedBackendTest extends AbstractTestCase
         $crawler = $this->getBackendPage($parameters);
 
         $this->assertSame('user9', trim($crawler->filter('.table tbody tr td.association')->eq(0)->text(null, true)));
-        $this->assertContains('sorted', $crawler->filter('.table th.association')->eq(0)->attr('class'));
+        $this->assertStringContainsString('sorted', $crawler->filter('.table th.association')->eq(0)->attr('class'));
 
         // the search form doesn't include sort config unless it's explicitly included in the
         // request URI because the user click on some column to sort results

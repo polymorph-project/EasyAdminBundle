@@ -29,7 +29,12 @@ class DoctrineOrmFilterTypeGuesser extends DoctrineOrmTypeGuesser
     ];
 
     /**
-     * {@inheritdoc}
+     * @param string $class
+     * @param string $property
+     *
+     * @return TypeGuess|null
+     *
+     * @throws \Doctrine\ORM\Mapping\MappingException
      */
     public function guessType($class, $property)
     {
