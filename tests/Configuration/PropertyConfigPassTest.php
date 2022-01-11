@@ -10,7 +10,7 @@ use Symfony\Component\Form\Guess\TypeGuess;
 
 class PropertyConfigPassTest extends TestCase
 {
-    public function testUnknownGuessedFormTypeOptionsAreRemoved()
+    public function testUnknownGuessedFormTypeOptionsAreRemoved(): void
     {
         $backendConfig = ['entities' => [
             'TestEntity' => [
@@ -54,7 +54,7 @@ class PropertyConfigPassTest extends TestCase
         );
     }
 
-    public function testSameFormTypeOptionsMustKeepGuessedFormOptions()
+    public function testSameFormTypeOptionsMustKeepGuessedFormOptions(): void
     {
         $backendConfig = ['entities' => [
             'TestEntity' => [
@@ -100,7 +100,7 @@ class PropertyConfigPassTest extends TestCase
         );
     }
 
-    public function testUndefinedFormTypeKeepsDefinedTypeOptions()
+    public function testUndefinedFormTypeKeepsDefinedTypeOptions(): void
     {
         $backendConfig = ['entities' => [
             'TestEntity' => [

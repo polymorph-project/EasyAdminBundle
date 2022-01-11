@@ -26,7 +26,7 @@ class OverrideTemplatesTest extends AbstractTestCase
     {
         $this->requestShowView();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Simple template used to override the default show.html.twig template.',
             static::$client->getResponse()->getContent()
         );
@@ -36,7 +36,7 @@ class OverrideTemplatesTest extends AbstractTestCase
     {
         $this->requestListView();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Simple template used to override the default list.html.twig template.',
             static::$client->getResponse()->getContent()
         );
@@ -46,7 +46,7 @@ class OverrideTemplatesTest extends AbstractTestCase
     {
         $this->requestNewView();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Overridden using Symfony\'s template overriding mechanism',
             static::$client->getResponse()->getContent()
         );

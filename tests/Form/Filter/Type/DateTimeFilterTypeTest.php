@@ -46,7 +46,7 @@ class DateTimeFilterTypeTest extends FilterTypeTest
         ];
 
         yield [
-            ['comparison' => ComparisonType::GT, 'value' => '2019-06-17 14:39:00', 'value2' => null],
+            ['comparison' => ComparisonType::GT, 'value' => '2019-06-17', 'value2' => null],
             ['comparison' => '>', 'value' => '2019-06-17', 'value2' => null],
             ['value_type' => DateType::class],
             'SELECT o FROM Object o WHERE o.foo > :foo_1',

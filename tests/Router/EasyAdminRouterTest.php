@@ -3,6 +3,7 @@
 namespace EasyCorp\Bundle\EasyAdminBundle\Tests\Router;
 
 use AppTestBundle\Entity\FunctionalTests\Product;
+use EasyCorp\Bundle\EasyAdminBundle\Exception\UndefinedEntityException;
 use EasyCorp\Bundle\EasyAdminBundle\Router\EasyAdminRouter;
 use EasyCorp\Bundle\EasyAdminBundle\Tests\Fixtures\AbstractTestCase;
 
@@ -32,21 +33,20 @@ final class EasyAdminRouterTest extends AbstractTestCase
     {
         $url = $this->router->generate($entity, $action, $parameters);
 
-        $this->assertContains('entity='.$expectEntity, $url);
-        $this->assertContains('action='.$action, $url);
+        $this->assertStringContainsString('entity='.$expectEntity, $url);
+        $this->assertStringContainsString('action='.$action, $url);
 
         foreach (array_merge($parameters, $expectParameters) as $key => $value) {
-            $this->assertContains($key.'='.$value, $url);
+            $this->assertStringContainsString($key.'='.$value, $url);
         }
     }
 
     /**
      * @dataProvider provideUndefinedEntities
-     *
-     * @expectedException \EasyCorp\Bundle\EasyAdminBundle\Exception\UndefinedEntityException
      */
     public function testUndefinedEntityException($entity, $action)
     {
+        $this->expectException(UndefinedEntityException::class);
         $this->router->generate($entity, $action);
     }
 

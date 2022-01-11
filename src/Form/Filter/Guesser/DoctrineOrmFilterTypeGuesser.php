@@ -2,7 +2,6 @@
 
 namespace EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Guesser;
 
-use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Type\ArrayFilterType;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Type\BooleanFilterType;
@@ -25,12 +24,17 @@ use Symfony\Component\Form\Guess\TypeGuess;
  */
 class DoctrineOrmFilterTypeGuesser extends DoctrineOrmTypeGuesser
 {
-    private static $defaultOptions = [
+    private static array $defaultOptions = [
         'translation_domain' => 'EasyAdminBundle',
     ];
 
     /**
-     * {@inheritdoc}
+     * @param string $class
+     * @param string $property
+     *
+     * @return TypeGuess|null
+     *
+     * @throws \Doctrine\ORM\Mapping\MappingException
      */
     public function guessType($class, $property)
     {

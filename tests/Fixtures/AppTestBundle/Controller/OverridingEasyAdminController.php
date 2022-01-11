@@ -13,7 +13,7 @@ class OverridingEasyAdminController extends AbstractController
      *
      * @return Response
      */
-    public function overrideLayout()
+    public function overrideLayout(): Response
     {
         return $this->render('override_controller/layout.html.twig');
     }

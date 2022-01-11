@@ -35,8 +35,8 @@ class DefaultBackendTest extends AbstractTestCase
         $backendConfig = static::$client->getContainer()->get('easyadmin.config.manager')->getBackendConfig();
         $this->assertFalse($backendConfig['design']['rtl'], 'RTL is disabled by default.');
 
-        $this->assertNotContains('bootstrap-rtl.min.css', $crawler->filter('head')->text(null, true));
-        $this->assertNotContains('adminlte-rtl.min.css', $crawler->filter('head')->text(null, true));
+        $this->assertStringNotContainsString('bootstrap-rtl.min.css', $crawler->filter('head')->text(null, true));
+        $this->assertStringNotContainsString('adminlte-rtl.min.css', $crawler->filter('head')->text(null, true));
     }
 
     public function testDefaultCssStylesAreLinked()
@@ -92,7 +92,7 @@ class DefaultBackendTest extends AbstractTestCase
     {
         $crawler = $this->getBackendHomepage();
 
-        $this->assertContains('Anonymous', $crawler->filter('[data-toggle="popover"]')->attr('data-content'));
+        $this->assertStringContainsString('Anonymous', $crawler->filter('[data-toggle="popover"]')->attr('data-content'));
         $this->assertCount(0, $crawler->filter('.user-details .user-menu'));
     }
 
@@ -104,7 +104,7 @@ class DefaultBackendTest extends AbstractTestCase
         // HTML layout to override any other values of the same variable. Otherwise, don't define the
         // variable in the layout because it's already defined in variables.css and that's simpler to
         // override for designers.
-        $this->assertNotContains('--color-primary: hsl(230, 55%, 60%);', static::$client->getResponse()->getContent(), 'The --color-primary CSS variable is not hardcoded in the HTML when its value is undefined or the default one.');
+        $this->assertStringNotContainsString('--color-primary: hsl(230, 55%, 60%);', static::$client->getResponse()->getContent(), 'The --color-primary CSS variable is not hardcoded in the HTML when its value is undefined or the default one.');
     }
 
     public function testListViewTitle()
@@ -149,7 +149,7 @@ class DefaultBackendTest extends AbstractTestCase
         $crawler = $this->requestListView();
 
         $this->assertSame('Add Category', trim($crawler->filter('.global-actions a.btn')->text(null, true)));
-        $this->assertContains('action-new', trim($crawler->filter('.global-actions a.btn')->attr('class')));
+        $this->assertStringContainsString('action-new', trim($crawler->filter('.global-actions a.btn')->attr('class')));
         $this->assertSame('_self', $crawler->filter('.global-actions a.btn')->attr('target'));
         $this->assertCount(0, $crawler->filter('.global-actions a.btn i'), 'The default "new" button shows no icon.');
         $this->assertStringStartsWith('/admin/?action=new&entity=Category&view=list&sortField=id&sortDirection=DESC&page=1', $crawler->filter('.global-actions a.btn')->attr('href'));
@@ -160,7 +160,7 @@ class DefaultBackendTest extends AbstractTestCase
         $crawler = $this->requestListView();
 
         $this->assertSame('Edit', trim($crawler->filter('#main .table td.actions a')->eq(0)->text(null, true)));
-        $this->assertContains('action-edit', trim($crawler->filter('#main .table td.actions a')->eq(0)->attr('class')));
+        $this->assertStringContainsString('action-edit', trim($crawler->filter('#main .table td.actions a')->eq(0)->attr('class')));
         $this->assertSame('_self', $crawler->filter('#main .table td.actions a')->eq(0)->attr('target'));
         $this->assertSame('Delete', trim($crawler->filter('#main .table td.actions a')->eq(1)->text(null, true)));
     }
@@ -219,7 +219,7 @@ class DefaultBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestListView();
 
-        $this->assertContains('200 results', $crawler->filter('.list-pagination')->text(null, true));
+        $this->assertStringContainsString('200 results', $crawler->filter('.list-pagination')->text(null, true));
 
         $this->assertSame('page-item disabled', $crawler->filter('.list-pagination li:contains("Previous")')->attr('class'));
         $this->assertSame('page-link', $crawler->filter('.list-pagination a:contains("Previous")')->attr('class'));
@@ -231,8 +231,8 @@ class DefaultBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestListView('Purchase');
 
-        $this->assertRegExp('/\d{4}-\d{2}-\d{2}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.date')->text(null, true)));
-        $this->assertRegExp('/\d{2}:\d{2}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.time')->text(null, true)));
+        $this->assertMatchesRegularExpression('/\d{4}-\d{2}-\d{2}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.date')->text(null, true)));
+        $this->assertMatchesRegularExpression('/\d{2}:\d{2}/', trim($crawler->filter('#main table tr')->eq(1)->filter('td.time')->text(null, true)));
     }
 
     public function testListViewBooleanToggles()
@@ -247,7 +247,7 @@ class DefaultBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestListView('Product');
 
-        $this->assertNotContains('&lt;ul&gt;', trim($crawler->filter('#main table td.string')->first()->text(null, true)), 'HTML tags are removed by default in the "list" view.');
+        $this->assertStringNotContainsString('&lt;ul&gt;', trim($crawler->filter('#main table td.string')->first()->text(null, true)), 'HTML tags are removed by default in the "list" view.');
     }
 
     public function testListViewHasNoFilters()
@@ -281,7 +281,7 @@ class DefaultBackendTest extends AbstractTestCase
         $fieldClasses = ['integer', 'string', 'association'];
 
         foreach ($fieldClasses as $i => $cssClass) {
-            $this->assertContains('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
+            $this->assertStringContainsString('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
         }
     }
 
@@ -290,16 +290,16 @@ class DefaultBackendTest extends AbstractTestCase
         $crawler = $this->requestShowView();
 
         // edit action
-        $this->assertContains('action-edit', trim($crawler->filter('.form-actions a:contains("Edit")')->attr('class')));
-        $this->assertContains('fa-edit', trim($crawler->filter('.form-actions a:contains("Edit") i')->attr('class')));
+        $this->assertStringContainsString('action-edit', trim($crawler->filter('.form-actions a:contains("Edit")')->attr('class')));
+        $this->assertStringContainsString('fa-edit', trim($crawler->filter('.form-actions a:contains("Edit") i')->attr('class')));
         $this->assertSame('_self', $crawler->filter('.form-actions a:contains("Edit")')->attr('target'));
 
         // delete action
-        $this->assertContains('action-delete', trim($crawler->filter('.form-actions a:contains("Delete")')->attr('class')));
-        $this->assertContains('fa-trash', trim($crawler->filter('.form-actions a:contains("Delete") i')->attr('class')));
+        $this->assertStringContainsString('action-delete', trim($crawler->filter('.form-actions a:contains("Delete")')->attr('class')));
+        $this->assertStringContainsString('fa-trash', trim($crawler->filter('.form-actions a:contains("Delete") i')->attr('class')));
 
         // list action
-        $this->assertContains('action-list', trim($crawler->filter('.form-actions a:contains("Back to listing")')->attr('class')));
+        $this->assertStringContainsString('action-list', trim($crawler->filter('.form-actions a:contains("Back to listing")')->attr('class')));
         $this->assertSame('btn btn-link pr-0 action-list', trim($crawler->filter('.form-actions a:contains("Back to listing")')->attr('class')));
         $this->assertSame('_self', $crawler->filter('.form-actions a:contains("Back to listing")')->attr('target'));
     }
@@ -323,7 +323,7 @@ class DefaultBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Back to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -333,7 +333,7 @@ class DefaultBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestShowView('Product', 1);
 
-        $this->assertContains('<ul>', trim($crawler->filter('.form-group:contains("Html features")')->first()->text(null, true)), 'HTML tags are maintained by default in the "show" view.');
+        $this->assertStringContainsString('<ul>', trim($crawler->filter('.form-group:contains("Html features")')->first()->text(null, true)), 'HTML tags are maintained by default in the "show" view.');
     }
 
     public function testEditViewTitle()
@@ -370,7 +370,7 @@ class DefaultBackendTest extends AbstractTestCase
         $fieldClasses = ['text', 'entity'];
 
         foreach ($fieldClasses as $i => $cssClass) {
-            $this->assertContains('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
+            $this->assertStringContainsString('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
         }
     }
 
@@ -379,11 +379,11 @@ class DefaultBackendTest extends AbstractTestCase
         $crawler = $this->requestEditView();
 
         // save action
-        $this->assertContains('action-save', trim($crawler->filter('.form-actions button:contains("Save changes")')->attr('class')));
+        $this->assertStringContainsString('action-save', trim($crawler->filter('.form-actions button:contains("Save changes")')->attr('class')));
 
         // delete action
-        $this->assertContains('action-delete', trim($crawler->filter('.form-actions a:contains("Delete")')->attr('class')));
-        $this->assertContains('fa-trash', trim($crawler->filter('.form-actions a:contains("Delete") i')->attr('class')));
+        $this->assertStringContainsString('action-delete', trim($crawler->filter('.form-actions a:contains("Delete")')->attr('class')));
+        $this->assertStringContainsString('fa-trash', trim($crawler->filter('.form-actions a:contains("Delete") i')->attr('class')));
 
         // list action
         $this->assertSame('btn btn-link pr-0 action-list', trim($crawler->filter('.form-actions a:contains("Back to listing")')->attr('class')));
@@ -409,7 +409,7 @@ class DefaultBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Back to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -426,7 +426,7 @@ class DefaultBackendTest extends AbstractTestCase
         ]);
         $crawler = static::$client->submit($form);
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             $categoryName,
             $crawler->filter('#main table tr')->eq(1)->text(null, true),
             'The modified category is displayed in the first data row of the "list" table.'
@@ -453,7 +453,7 @@ class DefaultBackendTest extends AbstractTestCase
         static::$client->request('GET', '/admin/?'.http_build_query($queryParameters), [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
         $this->assertSame(500, static::$client->getResponse()->getStatusCode(), 'Trying to modify a non-existent property via Ajax returns a 500 error');
-        $this->assertContains('The type of the &quot;this_property_does_not_exist&quot; property is not &quot;toggle&quot;', static::$client->getResponse()->getContent());
+        $this->assertStringContainsString('The type of the &quot;this_property_does_not_exist&quot; property is not &quot;toggle&quot;', static::$client->getResponse()->getContent());
     }
 
     public function testNewViewTitle()
@@ -490,7 +490,7 @@ class DefaultBackendTest extends AbstractTestCase
         $fieldClasses = ['text', 'entity'];
 
         foreach ($fieldClasses as $i => $cssClass) {
-            $this->assertContains('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
+            $this->assertStringContainsString('field-'.$cssClass, trim($crawler->filter('#main .form-group')->eq($i)->attr('class')));
         }
     }
 
@@ -499,7 +499,7 @@ class DefaultBackendTest extends AbstractTestCase
         $crawler = $this->requestNewView();
 
         // save action
-        $this->assertContains('action-save', trim($crawler->filter('.form-actions button:contains("Save changes")')->attr('class')));
+        $this->assertStringContainsString('action-save', trim($crawler->filter('.form-actions button:contains("Save changes")')->attr('class')));
 
         // list action
         $this->assertSame('btn btn-link pr-0 action-list', trim($crawler->filter('.form-actions a:contains("Back to listing")')->attr('class')));
@@ -525,7 +525,7 @@ class DefaultBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Back to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -542,7 +542,7 @@ class DefaultBackendTest extends AbstractTestCase
         ]);
         $crawler = static::$client->submit($form);
 
-        $this->assertContains($categoryName, $crawler->filter('#main table tr')->eq(1)->text(null, true), 'The newly created category is displayed in the first data row of the "list" table.');
+        $this->assertStringContainsString($categoryName, $crawler->filter('#main table tr')->eq(1)->text(null, true), 'The newly created category is displayed in the first data row of the "list" table.');
     }
 
     public function testSearchViewTitle()
@@ -612,7 +612,7 @@ class DefaultBackendTest extends AbstractTestCase
     {
         $crawler = $this->requestSearchView();
 
-        $this->assertContains('200 results', $crawler->filter('.list-pagination')->text(null, true));
+        $this->assertStringContainsString('200 results', $crawler->filter('.list-pagination')->text(null, true));
 
         $this->assertSame('page-item disabled', $crawler->filter('.list-pagination li:contains("Previous")')->attr('class'));
         $this->assertSame('page-link', $crawler->filter('.list-pagination a:contains("Previous")')->attr('class'));
@@ -649,7 +649,7 @@ class DefaultBackendTest extends AbstractTestCase
 
         // 3. the 'referer' parameter should point to the exact same previous 'list' page
         $refererUrl = $crawler->filter('.form-actions a:contains("Back to listing")')->attr('href');
-        $queryString = parse_url($refererUrl, PHP_URL_QUERY);
+        $queryString = parse_url($refererUrl, \PHP_URL_QUERY);
         parse_str($queryString, $refererParameters);
 
         $this->assertSame($parameters, $refererParameters);
@@ -682,7 +682,7 @@ class DefaultBackendTest extends AbstractTestCase
         static::$client->request('DELETE', '/admin/?'.http_build_query($queryParameters));
 
         $this->assertSame(302, static::$client->getResponse()->getStatusCode());
-        $this->assertContains('Redirecting to /admin/?action=list&amp;entity=Product', static::$client->getResponse()->getContent());
+        $this->assertStringContainsString('Redirecting to /admin/?action=list&amp;entity=Product', static::$client->getResponse()->getContent());
     }
 
     public function testEntityDeletionRequiresDeleteHttpMethod()
@@ -692,7 +692,7 @@ class DefaultBackendTest extends AbstractTestCase
         static::$client->request('POST', '/admin/?'.http_build_query($queryParameters));
 
         $this->assertSame(302, static::$client->getResponse()->getStatusCode());
-        $this->assertContains('Redirecting to /admin/?action=list&amp;entity=Product', static::$client->getResponse()->getContent());
+        $this->assertStringContainsString('Redirecting to /admin/?action=list&amp;entity=Product', static::$client->getResponse()->getContent());
     }
 
     public function testEntityDeletionForm()

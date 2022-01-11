@@ -8,6 +8,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Tests\Form\Filter\Fixtures\FoobarFilterType;
 use EasyCorp\Bundle\EasyAdminBundle\Tests\Form\Filter\Fixtures\FooFilterType;
 use EasyCorp\Bundle\EasyAdminBundle\Tests\Form\Filter\Fixtures\InvalidFilterType;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\Form\Exception\RuntimeException;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeGuesserChain;
@@ -42,11 +44,9 @@ class FilterRegistryTest extends TestCase
         $this->assertSame('easyadmin.filter.type.foo', $this->filterRegistry->getType('foo'));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Form\Exception\InvalidArgumentException
-     */
     public function testGetInvalidType()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->filterRegistry->getType('bar');
     }
 
@@ -74,12 +74,10 @@ class FilterRegistryTest extends TestCase
         $this->assertSame($fooFilterType, $this->filterRegistry->resolveType($form));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Form\Exception\RuntimeException
-     * @expectedExceptionMessage Filter type "EasyCorp\Bundle\EasyAdminBundle\Tests\Form\Filter\Fixtures\InvalidFilterType" must implement "EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Type\FilterInterface".
-     */
     public function testInvalidFilterType()
     {
+        $this->expectExceptionMessage("Filter type \"EasyCorp\Bundle\EasyAdminBundle\Tests\Form\Filter\Fixtures\InvalidFilterType\" must implement \"EasyCorp\Bundle\EasyAdminBundle\Form\Filter\Type\FilterInterface\".");
+        $this->expectException(RuntimeException::class);
         $filterType = new InvalidFilterType();
         $form = $this->createFilterForm($filterType);
 

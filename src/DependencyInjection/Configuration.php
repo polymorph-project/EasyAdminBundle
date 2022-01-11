@@ -13,10 +13,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('easy_admin');
-        $rootNode = $this->getRootNode($treeBuilder, 'easy_admin');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->addGlobalOptionsSection($rootNode);
         $this->addUserSection($rootNode);
@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addGlobalOptionsSection(ArrayNodeDefinition $rootNode)
+    private function addGlobalOptionsSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
@@ -91,7 +91,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addUserSection(ArrayNodeDefinition $rootNode)
+    private function addUserSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
@@ -123,7 +123,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addDesignSection(ArrayNodeDefinition $rootNode)
+    private function addDesignSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
@@ -186,7 +186,7 @@ class Configuration implements ConfigurationInterface
                                                 'jpg' => 'image/jpeg',
                                                 'jpeg' => 'image/jpeg',
                                             ];
-                                            if (!isset($v['mime_type']) && isset($mimeTypes[$ext = pathinfo($v['path'], PATHINFO_EXTENSION)])) {
+                                            if (!isset($v['mime_type']) && isset($mimeTypes[$ext = pathinfo($v['path'], \PATHINFO_EXTENSION)])) {
                                                 $v['mime_type'] = $mimeTypes[$ext];
                                             } elseif (!isset($v['mime_type'])) {
                                                 $v['mime_type'] = null;
@@ -261,7 +261,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addViewsSection(ArrayNodeDefinition $rootNode)
+    private function addViewsSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
@@ -361,7 +361,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addEntitiesSection(ArrayNodeDefinition $rootNode)
+    private function addEntitiesSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
@@ -374,15 +374,5 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-    }
-
-    private function getRootNode(TreeBuilder $treeBuilder, $name)
-    {
-        // BC layer for symfony/config 4.1 and older
-        if (!method_exists($treeBuilder, 'getRootNode')) {
-            return $treeBuilder->root($name);
-        }
-
-        return $treeBuilder->getRootNode();
     }
 }

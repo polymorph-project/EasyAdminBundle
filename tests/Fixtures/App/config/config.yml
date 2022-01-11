@@ -19,7 +19,7 @@ framework:
     profiler:
         collect: true
     session:
-        storage_id: session.storage.mock_file
+        storage_factory_id: session.storage.factory.mock_file
 
 doctrine:
     dbal:
@@ -49,10 +49,10 @@ twig:
     default_path: '%kernel.project_dir%/templates'
 
 security:
+    enable_authenticator_manager: true
     firewalls:
         main:
             pattern: ^/
-            anonymous: true
     providers:
         in_memory:
              memory: ~

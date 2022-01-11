@@ -30,7 +30,8 @@ class AdvancedFormLayoutTest extends AbstractTestCase
                 trim($crawler->filter('ul.nav-tabs li')->eq(0)->text(null, true)),
                 'The first tab of the form is displayed correctly.'
             );
-            $this->assertContains(
+
+            $this->assertSame(
                 'fa fa-fw fa-pencil',
                 $crawler->filter('ul.nav-tabs li')->eq(0)->filter('i')->attr('class'),
                 'The first tab displays the configured icon.'
@@ -45,7 +46,7 @@ class AdvancedFormLayoutTest extends AbstractTestCase
                 trim($crawler->filter('ul.nav-tabs li')->eq(1)->text(null, true)),
                 'The second tab of the form is displayed correctly.'
             );
-            $this->assertContains(
+            $this->assertStringContainsString(
                 'The <b>help message</b> of this tab',
                 trim($crawler->filter('.tab-pane')->eq(1)->filter('.tab-help')->html()),
                 'The second tab of the form displays a help message.'
@@ -82,11 +83,11 @@ class AdvancedFormLayoutTest extends AbstractTestCase
                 1,
                 $crawler->filter('form .field-group')->eq(1)->filter('fieldset .form-section')
             );
-            $this->assertContains(
+            $this->assertStringContainsString(
                 '<h2>',
                 trim($crawler->filter('form .field-group')->eq(1)->filter('fieldset .form-section')->html())
             );
-            $this->assertContains(
+            $this->assertStringContainsString(
                 '<span></span>',
                 trim($crawler->filter('form .field-group')->eq(1)->filter('fieldset .form-section')->html())
             );

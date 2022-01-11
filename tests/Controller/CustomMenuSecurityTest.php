@@ -8,7 +8,7 @@ class CustomMenuSecurityTest extends AbstractTestCase
 {
     protected static $options = ['environment' => 'custom_menu_security'];
 
-    public function testMenuSecurityAsAnonymousUser()
+    public function testMenuSecurityAsAnonymousUser(): void
     {
         $crawler = $this->requestListView();
 
@@ -16,7 +16,7 @@ class CustomMenuSecurityTest extends AbstractTestCase
         $this->assertSame('Categories', trim($crawler->filter('.sidebar-menu li')->text(null, true)));
     }
 
-    public function testMenuSecurityAsLoggedUser()
+    public function testMenuSecurityAsLoggedUser(): void
     {
         static::$client->followRedirects();
         $crawler = static::$client->request('GET', '/admin', [], [], [

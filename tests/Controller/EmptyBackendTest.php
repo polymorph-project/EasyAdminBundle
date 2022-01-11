@@ -13,6 +13,6 @@ class EmptyBackendTest extends AbstractTestCase
         static::$client->request('GET', '/admin/');
 
         $this->assertSame(500, static::$client->getResponse()->getStatusCode());
-        $this->assertContains('NoEntitiesConfiguredException', static::$client->getResponse()->getContent());
+        $this->assertStringContainsString('NoEntitiesConfiguredException', static::$client->getResponse()->getContent());
     }
 }

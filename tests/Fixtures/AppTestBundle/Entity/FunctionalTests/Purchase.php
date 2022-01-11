@@ -74,7 +74,7 @@ class Purchase
      * The customer billing address.
      *
      * @var array
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json")
      */
     protected $billingAddress = [];
 

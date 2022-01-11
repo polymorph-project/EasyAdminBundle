@@ -6,7 +6,6 @@ use AppTestBundle\Entity\FunctionalTests\Product;
 use AppTestBundle\Form\Data\AddProductData;
 use AppTestBundle\Form\Data\UpdateProductNameData;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
-use Symfony\Component\Form\FormInterface;
 
 class ProductController extends EasyAdminController
 {
@@ -44,7 +43,7 @@ class ProductController extends EasyAdminController
     /**
      * @param Product $product
      */
-    protected function updateEntity($product, FormInterface $editForm = null): void
+    protected function updateEntity($product, $editForm = null): void
     {
         /** @var UpdateProductNameData $object */
         $object = $editForm->getData();

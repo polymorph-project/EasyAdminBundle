@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private $phrases = [
+    private array $phrases = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'Pellentesque vitae velit ex.',
         'Mauris dapibus, risus quis suscipit vulputate, eros diam egestas libero, eu vulputate eros eros eu risus.',
@@ -32,7 +32,7 @@ class AppFixtures extends Fixture
         'Pellentesque et sapien pulvinar, consectetur eros ac, vehicula odio.',
     ];
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $users = $this->createUsers();
         foreach ($users as $user) {
@@ -275,11 +275,11 @@ class AppFixtures extends Fixture
     private function generateGuid()
     {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0x0fff) | 0x4000,
-            mt_rand(0, 0x3fff) | 0x8000,
-            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+            mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF),
+            mt_rand(0, 0xFFFF),
+            mt_rand(0, 0x0FFF) | 0x4000,
+            mt_rand(0, 0x3FFF) | 0x8000,
+            mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF)
         );
     }
 

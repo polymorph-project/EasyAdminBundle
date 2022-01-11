@@ -31,7 +31,6 @@ class EasyAdminFormType extends AbstractType
     private $authorizationChecker;
 
     /**
-     * @param ConfigManager               $configManager
      * @param TypeConfiguratorInterface[] $configurators
      */
     public function __construct(ConfigManager $configManager, array $configurators = [], AuthorizationCheckerInterface $authorizationChecker = null)
@@ -131,7 +130,7 @@ class EasyAdminFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['easyadmin_form_tabs'] = $form->getConfig()->getAttribute('easyadmin_form_tabs');
         $view->vars['easyadmin_form_groups'] = $form->getConfig()->getAttribute('easyadmin_form_groups');
@@ -162,7 +161,7 @@ class EasyAdminFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'easyadmin';
     }
@@ -172,7 +171,7 @@ class EasyAdminFormType extends AbstractType
      *
      * @return \Closure
      */
-    private function getAttributesNormalizer()
+    private function getAttributesNormalizer(): \Closure
     {
         return function (Options $options, $value) {
             return array_replace([

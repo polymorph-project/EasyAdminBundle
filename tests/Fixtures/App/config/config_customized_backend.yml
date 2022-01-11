@@ -23,7 +23,7 @@ framework:
     profiler:
         collect: true
     session:
-        storage_id: session.storage.mock_file
+        storage_factory_id: session.storage.factory.mock_file
 
 twig:
     strict_variables: '%kernel.debug%'
@@ -46,7 +46,8 @@ doctrine:
                 is_bundle: false
 
 security:
-    encoders:
+    enable_authenticator_manager: true
+    password_hashers:
         Symfony\Component\Security\Core\User\User: plaintext
     providers:
         in_memory:
@@ -58,12 +59,11 @@ security:
     firewalls:
         main:
             pattern: ^/
-            anonymous: true
             logout: true
             http_basic:
                 provider: in_memory
     access_control:
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: PUBLIC_ACCESS }
 
 easy_admin:
     site_name: 'ACME Backend'

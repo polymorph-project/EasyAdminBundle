@@ -2,11 +2,14 @@
 
 namespace EasyCorp\Bundle\EasyAdminBundle\Tests\Configuration;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigManagerTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     public static function tearDownAfterClass(): void
     {
         // this is important because this test generates a different Symfony
@@ -40,7 +43,7 @@ class ConfigManagerTest extends TestCase
                 $this->expectExceptionMessage($backendConfig['expected_exception']['message_string']);
             } elseif (isset($backendConfig['expected_exception']['message_regexp'])) {
                 $this->expectException($backendConfig['expected_exception']['class']);
-                $this->expectExceptionMessageRegExp($backendConfig['expected_exception']['message_regexp']);
+                $this->expectExceptionMessageMatches($backendConfig['expected_exception']['message_regexp']);
             }
         }
 

@@ -23,7 +23,7 @@ class FiltersTest extends AbstractTestCase
 
         $this->assertCount(1, $crawler->filter('.global-actions .action-filters'));
         $this->assertCount(1, $crawler->filter('.global-actions .action-filters-button'));
-        $this->assertContains('Filters (1)', $crawler->filter('.global-actions .action-filters-button')->text(null, true));
+        $this->assertStringContainsString('Filters (1)', $crawler->filter('.global-actions .action-filters-button')->text(null, true));
         $this->assertCount(1, $crawler->filter('.global-actions .action-filters-reset'));
     }
 
